@@ -10,6 +10,7 @@ impl DiffBuilder {
 
         Self::push_header(&mut result, &source_file, &target_file);
         Self::push_change_range(&mut result, &diff);
+        Self::push_change(&mut result, &diff);
         result
     }
 
@@ -54,8 +55,24 @@ impl DiffBuilder {
         };
 
         result.push_str(&format!(
-            "@@ -{},{} +{},{} @@",
+            "@@ -{},{} +{},{} @@\n",
             old_start, old_count, new_start, new_count
         ));
+    }
+
+    fn push_change(result: &mut String, diff: &TextDiff) {
+        for edit in &diff.edits {
+            match edit {
+                EditTag::Delete { old } => {
+                    result.push_str(&format!("-{}\n", old.text));
+                }
+                EditTag::Insert { new } => {
+                    result.push_str(&format!("+{}\n", new.text));
+                }
+                EditTag::Equal { old, new: _new } => {
+                    result.push_str(&format!(" {}\n", old.text));
+                }
+            }
+        }
     }
 }

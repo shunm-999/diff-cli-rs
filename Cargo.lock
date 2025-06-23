@@ -121,7 +121,7 @@ checksum = "7943c866cc5cd64cbc25b2e01621d07fa8eb2a1a23160ee81ce38704e97b8ecf"
 [[package]]
 name = "myers"
 version = "0.1.0"
-source = "git+https://github.com/shunm-999/myers-rs#b3761d59b3ceb2184f856789b6be476703eeba57"
+source = "git+https://github.com/shunm-999/myers-rs#06cf93cb0b91c19ba5192c171426a5feae06c463"
 
 [[package]]
 name = "once_cell_polyfill"

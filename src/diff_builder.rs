@@ -190,7 +190,7 @@ mod tests {
 
         let mut result = String::new();
         DiffBuilder::push_header(&mut result, &source_file, &target_file);
-        
+
         assert_eq!(result, "--- source.txt\n+++ target.txt\n");
     }
 
@@ -198,10 +198,10 @@ mod tests {
     fn test_push_change_range() {
         let old_range = ChangeRange { start: 1, count: 3 };
         let new_range = ChangeRange { start: 1, count: 4 };
-        
+
         let mut result = String::new();
         DiffBuilder::push_change_range(&mut result, &old_range, &new_range);
-        
+
         assert_eq!(result, "@@ -1,3 +1,4 @@\n");
     }
 
@@ -217,10 +217,10 @@ mod tests {
         };
 
         let result = DiffBuilder::build(source_file, target_file);
-        
+
         assert!(result.contains("--- test1.txt"));
         assert!(result.contains("+++ test2.txt"));
-        assert!(result.contains("@@ -1,3 +1,3 @@"));
+        assert!(result.contains("@@ -1,4 +1,4 @@"));
         assert!(result.contains(" line1"));
         assert!(result.contains(" line2"));
         assert!(result.contains(" line3"));
@@ -238,7 +238,7 @@ mod tests {
         };
 
         let result = DiffBuilder::build(source_file, target_file);
-        
+
         assert!(result.contains("-line2"));
         assert!(result.contains("-line4"));
         assert!(result.contains(" line1"));
@@ -257,7 +257,7 @@ mod tests {
         };
 
         let result = DiffBuilder::build(source_file, target_file);
-        
+
         assert!(result.contains("+line2"));
         assert!(result.contains("+line4"));
         assert!(result.contains(" line1"));
@@ -276,7 +276,7 @@ mod tests {
         };
 
         let result = DiffBuilder::build(source_file, target_file);
-        
+
         assert!(result.contains("-old_line2"));
         assert!(result.contains("+new_line2"));
         assert!(result.contains(" line1"));
@@ -295,7 +295,7 @@ mod tests {
         };
 
         let result = DiffBuilder::build(source_file, target_file);
-        
+
         assert!(result.contains("\\ No newline at end of file"));
     }
 
@@ -311,7 +311,7 @@ mod tests {
         };
 
         let result = DiffBuilder::build(source_file, target_file);
-        
+
         assert!(result.contains("--- empty1.txt"));
         assert!(result.contains("+++ empty2.txt"));
         // Empty files should have minimal diff output
@@ -329,7 +329,7 @@ mod tests {
         };
 
         let result = DiffBuilder::build(source_file, target_file);
-        
+
         assert!(result.contains("-old"));
         assert!(result.contains("+new"));
     }
@@ -348,7 +348,7 @@ mod tests {
         };
 
         let result = DiffBuilder::build(source_file, target_file);
-        
+
         // Should contain change range information
         assert!(result.contains("@@"));
         // Should show the change

@@ -20,6 +20,8 @@ impl ChangeRange {
     }
 }
 
+const NO_NEWLINE_AT_END_OF_FILE: &str = "\\ No newline at end of file\n";
+
 impl DiffBuilder {
     pub(crate) fn build(source_file: File, target_file: File) -> String {
         let mut result = String::new();
@@ -115,24 +117,24 @@ impl DiffBuilder {
                     result.push_str(&format!("-{}\n", old.text));
 
                     if !old_has_new_line && old.number == old_change_range.end() {
-                        result.push_str("\\ No newline at end of file\n");
+                        result.push_str(NO_NEWLINE_AT_END_OF_FILE);
                     }
                 }
                 EditTag::Insert { new } => {
                     result.push_str(&format!("+{}\n", new.text));
 
                     if !new_has_new_line && new.number == new_change_range.end() {
-                        result.push_str("\\ No newline at end of file\n");
+                        result.push_str(NO_NEWLINE_AT_END_OF_FILE);
                     }
                 }
                 EditTag::Equal { old, new: _new } => {
                     result.push_str(&format!(" {}\n", old.text));
 
                     if !old_has_new_line && old.number == old_change_range.end() {
-                        result.push_str("\\ No newline at end of file\n");
+                        result.push_str(NO_NEWLINE_AT_END_OF_FILE);
                     }
                     if !new_has_new_line && old.number == new_change_range.end() {
-                        result.push_str("\\ No newline at end of file\n");
+                        result.push_str(NO_NEWLINE_AT_END_OF_FILE);
                     }
                 }
             }
